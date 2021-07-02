@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "dependencies": {
+    "for-each-line": "^1.0.0",
+    "ngraph.generators": "^19.3.1",
+    "ngraph.graph": "^19.1.0",
+    "ngraph.random": "^1.1.0"
+  },
+  "devDependencies": {
+    "miserables": "^2.0.0"
+  }
+}
