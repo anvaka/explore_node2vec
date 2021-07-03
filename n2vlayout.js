@@ -82,6 +82,7 @@ function getMetaInformation(name, layout) {
     q: 'Inout hyperparameter (-q)'
   }
 
+  // Note: there is a bug with float values here.
   let [graphName, metaParts] = name.split('.');
   let meta = metaParts.split('_').map(param => {
     let description = keyMap[param[0]];

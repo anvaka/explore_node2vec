@@ -1,13 +1,13 @@
 import ngraphRandom from 'ngraph.random';
 
-export default function createLayout(graph) {
+export default function createLayout(graph, customDistance) {
   const rnd = ngraphRandom(42);
   const totalNodes = graph.getNodeCount();
-  const getDistance = getEuclidVecDistance;
+  const getDistance = customDistance || getEuclidVecDistance;
 
   let dimensions;
   let zero;
-  // We will use max distance to comute schedule
+  // We will use max distance to compute schedule
   let maxDistance = -Infinity;
   let nodes = [];
   graph.forEachNode(node => {
@@ -46,7 +46,7 @@ export default function createLayout(graph) {
       let from = nodes[i];
       for (let j = i + 1; j < nodes.length; ++j) {
         let to = nodes[j];
-        let d = getDistance(from, to);
+        let d = getDistance(from.vec, to.vec);
         let w = getWeight(d);
         let dx = from.position.x - to.position.x;
         let dy = from.position.y - to.position.y;
@@ -65,7 +65,7 @@ export default function createLayout(graph) {
   function run(iterationCount) {
     let schedule = createSchedule(iterationCount, maxDistance * 2, 0.1);
     schedule.forEach(learningRate => {
-      iterator.shuffle();
+      // iterator.shuffle();
       for (let i = 0; i < nodes.length - 1; ++i) {
         for (let j = i + 1; j < nodes.length; ++j) {
           updateNodePosition(nodes[i], nodes[j], learningRate);

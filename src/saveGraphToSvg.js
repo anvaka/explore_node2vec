@@ -14,10 +14,12 @@ export default function saveGraphToSvg(fileName, graph, layout, textContext) {
 
   let w = maxX - minX;
   let h = maxY - minY;
+  let dx = (w * .2)/2;
+  let dy = (h * .2)/2;
   let fontSize = Math.min(w, h) * .04;
   h += fontSize * textContext.length;
 
-  let svg = [`<svg viewBox="${minX} ${minY} ${w} ${h}">`];
+  let svg = [`<svg viewBox="${minX - dx} ${minY - dy} ${w + 2 * dx} ${h + 2 * dy}">`];
 
   svg.push('<g id="lines">')
   lines.forEach(l => svg.push(l));
