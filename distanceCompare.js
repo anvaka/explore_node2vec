@@ -6,13 +6,17 @@ import readGraph from './src/readGraph.js'
 import createActualDistance from './src/createActualDistance.js';
 import createApproximateDistance from './src/createApproximateDistance.js'
 import sampleGraph from './src/sampleGraph.js'
+import generators from 'ngraph.generators';
 
 const graphName = process.argv[2];
+readGraph(graphName).then(processGraph);
 
-readGraph(graphName).then(graph => {
+// processGraph(generators.balancedBinTree(10));
+
+function processGraph(graph) {
   const getGraphTheoreticalDistance = createActualDistance(graph);
 
-  for (let i = 1; i < graph.getNodeCount(); ++i) {
+  for (let i = 1; i < Math.min(20, graph.getNodeCount()); ++i) {
     const pivotNodes = sampleGraph(graph, i);
     const getApproximateDistance = createApproximateDistance(graph, pivotNodes);
     let error = 0;
@@ -33,4 +37,4 @@ readGraph(graphName).then(graph => {
     all.sort((a, b) => b - a);
     console.log('Iteration ' + i + '. Total Error: ' + error + '; Avg error: ' + error / count + '; Max error: ' + all[0] + '; Min error: ' + all[all.length - 1] + '; P50: ' + all[Math.floor(all.length /2)])
   }
-});
+}
